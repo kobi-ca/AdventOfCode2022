@@ -3,8 +3,7 @@ use std::io::{self, BufRead};
 use std::path::Path;
 use std::collections::HashSet;
 
-fn main() {
-    // File hosts must exist in current path before this produces output
+fn part1() {
     let mut count = 0;
     if let Ok(lines) = read_lines("./input.txt") {
         // Consumes the iterator, returns an (Optional) String
@@ -26,6 +25,57 @@ fn main() {
         }
     }
     println!("{}", count);
+}
+
+// struct groups {
+//     set1: String,
+//     set2: String,
+//     set3: String,
+// }
+
+// impl groups {
+//     fn new(s1: String, s2: String, s3: String) -> groups {
+//         groups {
+//             set1: s1,
+//             set2: s2,
+//             set3: s3,
+//         }
+//     }
+// }
+
+fn part2() {
+    let mut count = 0;
+    if let Ok(lines) = read_lines("./input.txt") {
+        let mut group_counter: usize = 0;
+        let mut groups = Vec::<String>::with_capacity(3);
+        groups.resize(3, "".to_string());
+        for line in lines {
+            if let Ok(ip) = line {
+                groups[group_counter % 3] = ip;
+            } else {
+                panic!("...");
+            }
+            group_counter += 1;
+            if group_counter % 3 == 0 {
+                let set1: HashSet<char> = HashSet::from_iter(groups[0].chars());
+                let set2: HashSet<char> = HashSet::from_iter(groups[1].chars());
+                let set3: HashSet<char> = HashSet::from_iter(groups[2].chars());
+                let c = set1.iter().filter(|k| set2.contains(k)).filter(|k| set3.contains(k)).nth(0).unwrap();
+                match c {
+                    'a'..='z' => count += *c as u32 - 'a' as u32 + 1,
+                    'A'..='Z' => count += *c as u32 - 'A' as u32 + 27,
+                    _ => panic!("..."),
+                }
+            }
+        }
+    }
+    println!("{}", count);
+}
+
+
+fn main() {
+    part1();
+    part2();
 }
 
 // The output is wrapped in a Result to allow matching on errors
