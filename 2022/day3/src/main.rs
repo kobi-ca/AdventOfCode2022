@@ -27,22 +27,6 @@ fn part1() {
     println!("{}", count);
 }
 
-// struct groups {
-//     set1: String,
-//     set2: String,
-//     set3: String,
-// }
-
-// impl groups {
-//     fn new(s1: String, s2: String, s3: String) -> groups {
-//         groups {
-//             set1: s1,
-//             set2: s2,
-//             set3: s3,
-//         }
-//     }
-// }
-
 fn part2() {
     let mut count = 0;
     if let Ok(lines) = read_lines("./input.txt") {
