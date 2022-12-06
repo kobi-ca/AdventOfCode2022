@@ -1,8 +1,8 @@
+use itertools::Itertools;
+use iterwindows::IterArrayWindows;
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
-use iterwindows::IterArrayWindows;
-use itertools::Itertools;
 
 fn main() {
     const WINDOW_SIZE: usize = 14; // 4 for part1, 14 for part2
@@ -14,8 +14,7 @@ fn main() {
     let mut counter = WINDOW_SIZE; // 4 for part1
     for chunk in r {
         //println!("{:?}", chunk);
-        let res = chunk.to_vec().into_iter().unique().collect::<Vec<_>>();
-        if res.len() == WINDOW_SIZE {
+        if chunk.into_iter().unique().count() == WINDOW_SIZE {
             break;
         }
         counter += 1;
