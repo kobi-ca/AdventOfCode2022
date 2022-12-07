@@ -13,8 +13,8 @@ fn parse_cmd(l: &str, state: &mut State) {
         println!("moving to the top");
     } else if l.starts_with("$ cd ..") {
         println!("moving one up");
-    } else if l.starts_with("cd ") {
-        println!("cd into dir");
+    } else if let Some(dir) = l.strip_prefix("$ cd ") {
+        println!("cd into dir {}", dir);
     } else if l.contains("$ ls") {
         println!("listing dir");
         *state = State::ListingDirectory;
